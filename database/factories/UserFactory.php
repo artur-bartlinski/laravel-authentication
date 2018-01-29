@@ -22,7 +22,7 @@ $factory->define(App\User::class, function (Faker $faker) {
         'title_id' => factory(Title::class)->create()->id,
         'forename' => $faker->firstName,
         'surname' => $faker->lastName,
-        'dob' => $faker->date(),
+        'dob' => '2011-11-11',
         'gender_id' => factory(Gender::class)->create()->id,
         'remember_token' => str_random(10),
     ];

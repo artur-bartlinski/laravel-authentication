@@ -5,13 +5,13 @@ use Faker\Generator as Faker;
 
 $factory->define(Address::class, function (Faker $faker) {
     return [
-        'address_line_1' => $faker->streetAddress,
-        'address_line_2' => $faker->streetName,
-        'town' => $faker->unique()->city,
-        'county' => $faker->unique()->word,
-        'country' => $faker->unique()->country,
-        'postal_code' => $faker->unique()->postcode,
-        'from_date' => $faker->unique()->date(),
-        'until_date' => $faker->unique()->date(),
+        'address_line_1' => 'Grace Avenue',
+        'address_line_2' => 'Grace Avenue',
+        'town' => $faker->city,
+        'county' => $faker->word,
+        'country' => $faker->country,
+        'postal_code' => $faker->postcode,
+        'from_date' => '2011-11-12',
+        'until_date' => '2011-11-13',
     ];
 });

@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Address;
+use App\Gender;
+use App\Title;
 use App\User;
 use App\Http\Controllers\Controller;
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
@@ -41,6 +44,35 @@ class RegisterController extends Controller
     }
 
     /**
+     * Show the application registration form.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function showRegistrationForm()
+    {
+        $titles = Title::all();
+        $genders = Gender::all();
+
+        return view('auth.register', compact('genders','titles'));
+    }
+
+    /**
+     * Handle a registration request for the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function register(Request $request)
+    {
+        $this->validator($request->all())->validate();
+
+        event(new Registered($user = $this->create($request->all())));
+
+        return $this->registered($request, $user)
+            ?: redirect($this->redirectPath());
+    }
+
+    /**
      * Get a validator for an incoming registration request.
      *
      * @param  array  $data
@@ -49,23 +81,23 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'forename' => 'string|max:255',
-            'surname' => 'string|max:255',
-            'title_id' => 'integer',
-            'gender_id' => 'integer',
-            'dob' => 'date',
+            'forename' => 'nullable|string|max:255',
+            'surname' => 'nullable|string|max:255',
+            'title_id' => 'nullable|integer',
+            'gender_id' => 'nullable|integer',
+            'dob' => 'required|date',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
             'password_confirmation' => 'required|string|min:6|same:password',
 
-            'address_line_1' => 'required|string',
-            'address_line_2' => 'string',
+            'address_line_1' => 'addressLength:{$data["address_line_2"]}|required|string|max:60',
+            'address_line_2' => 'addressLength:{$data["address_line_1"]}|nullable|string|max:60',
             'town' => 'required|string',
-            'county' => 'string',
+            'county' => 'nullable|string',
             'country' => 'required|string',
             'postal_code' => 'required|string',
-            'from_date' => 'required|date',
-            'until_date' => 'required|date',
+            'from_date' => 'required|date|after_or_equal:dob|before:until_date',
+            'until_date' => 'required|date|after:from_date',
         ]);
     }
 
@@ -87,7 +119,7 @@ class RegisterController extends Controller
             'password' => bcrypt($data['password']),
         ]);
 
-        $user->addresses()->save([
+        $user->addresses()->create([
             'address_line_1' => $data['address_line_1'],
             'address_line_2' => $data['address_line_2'],
             'town' => $data['town'],

@@ -13,6 +13,7 @@ return [
     |
     */
 
+    'address_length'       => 'The length of both address lines must be less than 60 characters',
     'accepted'             => 'The :attribute must be accepted.',
     'active_url'           => 'The :attribute is not a valid URL.',
     'after'                => 'The :attribute must be a date after :date.',

@@ -41,15 +41,19 @@ class UserTest extends TestCase
     /** @test */
     public function can_login_registered_user()
     {
-        $this->attemptRegister();
-
-        $this->post('/login', [
-            'email' => 'john_doe@gmail.com',
-            'password' => $this->user->password,
-            '_token' => csrf_token()
-        ]);
+        $this->attemptLogin();
 
         $this->assertEquals($this->user->email, Auth::user()->email);
+    }
+
+    /** @test */
+    public function can_logout_user()
+    {
+        $this->attemptLogin();
+
+        $this->post('/logout');
+
+        $this->assertEmpty(Auth::user());
     }
 
     public function attemptRegister()
@@ -63,5 +67,16 @@ class UserTest extends TestCase
             ],
             $this->address->toArray()
         ));
+    }
+
+    public function attemptLogin()
+    {
+        $this->attemptRegister();
+
+        $this->post('/login', [
+            'email' => 'john_doe@gmail.com',
+            'password' => $this->user->password,
+            '_token' => csrf_token()
+        ]);
     }
 }

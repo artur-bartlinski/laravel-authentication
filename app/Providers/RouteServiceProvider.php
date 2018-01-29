@@ -2,6 +2,10 @@
 
 namespace App\Providers;
 
+use App\Address;
+use App\Gender;
+use App\Title;
+use App\User;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 
@@ -23,9 +27,23 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
-
         parent::boot();
+
+        Route::bind('user', function ($id) {
+            return User::findOrFail($id);
+        });
+
+        Route::bind('address', function ($id) {
+            return Address::findOrFail($id);
+        });
+
+        Route::bind('title', function ($id) {
+            return Title::findOrFail($id);
+        });
+
+        Route::bind('gender', function ($id) {
+            return Gender::findOrFail($id);
+        });
     }
 
     /**

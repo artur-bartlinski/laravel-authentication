@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Address;
 use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
@@ -48,9 +49,23 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => 'required|string|max:255',
+            'forename' => 'string|max:255',
+            'surname' => 'string|max:255',
+            'title_id' => 'integer',
+            'gender_id' => 'integer',
+            'dob' => 'date',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
+            'password_confirmation' => 'required|string|min:6|same:password',
+
+            'address_line_1' => 'required|string',
+            'address_line_2' => 'string',
+            'town' => 'required|string',
+            'county' => 'string',
+            'country' => 'required|string',
+            'postal_code' => 'required|string',
+            'from_date' => 'required|date',
+            'until_date' => 'required|date',
         ]);
     }
 
@@ -62,10 +77,27 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
-            'name' => $data['name'],
+        $user = User::create([
+            'forename' => $data['forename'],
+            'surname' => $data['surname'],
+            'title_id' => $data['title_id'],
+            'gender_id' => $data['gender_id'],
+            'dob' => $data['dob'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);
+
+        $user->addresses()->save([
+            'address_line_1' => $data['address_line_1'],
+            'address_line_2' => $data['address_line_2'],
+            'town' => $data['town'],
+            'county' => $data['county'],
+            'country' => $data['country'],
+            'postal_code' => $data['postal_code'],
+            'from_date' => $data['from_date'],
+            'until_date' => $data['until_date'],
+        ]);
+
+        return $user;
     }
 }

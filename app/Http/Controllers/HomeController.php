@@ -31,12 +31,14 @@ class HomeController extends Controller
         $address = $user->currentAddress;
         $addresses = $user->addresses;
 
-        return view('home', array_merge(
-            $user->toArray(),
-            $title->toArray(),
-            $gender->toArray(),
-            $address->toArray(),
-            $addresses->toArray()
+//        dd($user);
+
+        return view('home', compact(
+            'user',
+            'title',
+            'gender',
+            'address',
+            'addresses'
         ));
     }
 }

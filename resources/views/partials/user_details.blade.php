@@ -16,12 +16,12 @@
         <tbody>
         <tr>
             <th scope="row">1</th>
-            <td>{{ $email }}</td>
-            <td>{{ $title['name'] }}</td>
-            <td>{{ $forename }}</td>
-            <td>{{ $surname }}</td>
-            <td>{{ $dob }}</td>
-            <td>{{ $gender['name'] }}</td>
+            <td>{{ $user->email }}</td>
+            <td>{{ $user->title['name'] }}</td>
+            <td>{{ $user->forename }}</td>
+            <td>{{ $user->surname }}</td>
+            <td>{{ $user->dob }}</td>
+            <td>{{ $user->gender['name'] }}</td>
             <td>
                 <a href="{{ route('users.edit', auth()->id()) }}"><button type="button" class="btn btn-success">Edit</button></a>
             </td>

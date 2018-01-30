@@ -19,17 +19,17 @@
         @foreach($addresses as $address)
         <tr>
             <th scope="row">1</th>
-            <td>{{ $address_line_1 }}</td>
-            <td>{{ $address_line_2}}</td>
-            <td>{{ $town }}</td>
-            <td>{{ $county }}</td>
-            <td>{{ $country }}</td>
-            <td>{{ $postal_code }}</td>
-            <td>{{ $from_date }}</td>
-            <td>{{ $until_date }}</td>
+            <td>{{ $address->address_line_1 }}</td>
+            <td>{{ $address->address_line_2}}</td>
+            <td>{{ $address->town }}</td>
+            <td>{{ $address->county }}</td>
+            <td>{{ $address->country  }}</td>
+            <td>{{ $address->postal_code }}</td>
+            <td>{{ $address->from_date }}</td>
+            <td>{{ $address->until_date }}</td>
             <td>
-                <a href="{{ route('addresses.edit', $address_id) }}"><button type="button" class="btn btn-success">Edit</button></a>
-                <a href="{{ route('addresses.destroy', $address_id) }}"><button type="button" class="btn btn-danger">Delete</button></a>
+                <a href="{{ route('addresses.edit', $address->id) }}"><button type="button" class="btn btn-success">Edit</button></a>
+                <a href="{{ route('addresses.destroy', $address->id) }}"><button type="button" class="btn btn-danger">Delete</button></a>
             </td>
         </tr>
         @endforeach

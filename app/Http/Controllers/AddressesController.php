@@ -10,6 +10,16 @@ use Illuminate\Support\Facades\Auth;
 class AddressesController extends Controller
 {
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -71,7 +81,8 @@ class AddressesController extends Controller
      */
     public function update(Request $request, Address $address)
     {
-        if ($address->update($request->all())) {
+        if (Auth::user()->address_id === $address->id || Auth::user()->addresses()->where('id', $address->id)->get()) {
+            $address->update($request->all());
 
             return redirect()->route('home')
                 ->with('success', 'Address updated successfully');
@@ -84,11 +95,21 @@ class AddressesController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Address  $address
+     * @param  \App\Address $address
      * @return \Illuminate\Http\Response
+     * @throws \Exception
      */
     public function destroy(Address $address)
     {
-        //
+        if ((Auth::user()->address_id === $address->id) || !(Auth::user()->addresses()->where('id', $address->id)->get()))
+            return redirect()->route('home')
+                ->with('error', 'Address cannot be removed');
+
+
+            $address->users()->detach(Auth::id());
+            $address->delete();
+
+            return redirect()->route('home')
+                ->with('success', 'Address removed successfully');
     }
 }

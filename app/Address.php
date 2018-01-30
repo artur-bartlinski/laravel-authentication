@@ -15,7 +15,7 @@ class Address extends Model
         parent::boot();
 
         static::deleting(function($address) {
-            if ($address->users()->count()) {
+            if (($address->users()->count()) > 1) {
                 return false;
             }
         });

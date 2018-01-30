@@ -36,7 +36,7 @@ class AddressesController extends Controller
      */
     public function create()
     {
-        //
+        return view('addresses.create');
     }
 
     /**
@@ -47,7 +47,11 @@ class AddressesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $address = Address::create($request->all());
+        $address->users()->attach(Auth::id());
+
+        return redirect()->route('home')
+            ->with('success', 'Address created successfully');
     }
 
     /**

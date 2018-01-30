@@ -71,4 +71,19 @@ class UserTest extends TestCase
 
         $this->assertNotEmpty(Address::where('id', $this->user->address_id));
     }
+
+    /** @test */
+    public function can_create_address_record()
+    {
+        $address = factory(Address::class)->make();
+
+        $this->post('/adresses', array_merge(
+            $address->toArray(),
+            [
+                '_token' => csrf_token(),
+            ]
+        ));
+
+        $this->assertEquals(1, Address::all()->count());
+    }
 }

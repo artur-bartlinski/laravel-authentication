@@ -9,6 +9,7 @@
 
                     <div class="panel-body">
                         <form class="form-horizontal" method="POST" action="{{ route('users.update', $user) }}">
+                            <input type="hidden" name="_method" value="put">
                             {{ csrf_field() }}
 
                             <div class="form-group">

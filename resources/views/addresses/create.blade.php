@@ -8,7 +8,8 @@
                     <div class="panel-heading">Create address</div>
 
                     <div class="panel-body">
-                        <form class="form-horizontal" method="POST" action="{{ route('users.create') }}">
+                        <form class="form-horizontal" method="POST" action="{{ route('addresses.store') }}">
+                            <input type="hidden" name="_method" value="post">
                             {{ csrf_field() }}
 
                             <div class="form-group">

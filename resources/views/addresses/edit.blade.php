@@ -8,7 +8,8 @@
                     <div class="panel-heading">Update address</div>
 
                     <div class="panel-body">
-                        <form class="form-horizontal" method="POST" action="{{ route('users.update', $address) }}">
+                        <form class="form-horizontal" method="POST" action="{{ route('addresses.update', $address) }}">
+                            <input type="hidden" name="_method" value="put">
                             {{ csrf_field() }}
 
                             <div class="form-group">

@@ -45,7 +45,7 @@ class AddressesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(AddressRequest $request)
+    public function store(Request $request)
     {
         $address = Address::create($request->all());
         $address->users()->attach(Auth::id());

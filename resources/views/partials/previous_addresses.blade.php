@@ -29,7 +29,7 @@
             <td>{{ $address->until_date }}</td>
             <td>
                 <a href="{{ route('addresses.edit', $address->id) }}"><button type="button" class="btn btn-success">Edit</button></a>
-                <a href="{{ route('addresses.destroy', $address->id) }}"><button type="button" class="btn btn-danger">Delete</button></a>
+                <a href="{{ route('addresses.remove', $address->id) }}"><button type="button" class="btn btn-danger">Delete</button></a>
             </td>
         </tr>
         @endforeach

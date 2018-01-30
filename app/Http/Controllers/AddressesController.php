@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Address;
 use App\Http\Requests\AddressRequest;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -97,6 +98,15 @@ class AddressesController extends Controller
     }
 
     /**
+     * @param Address $address
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function remove(Address $address)
+    {
+        return view('addresses.remove', compact('address'));
+    }
+
+    /**
      * Remove the specified resource from storage.
      *
      * @param  \App\Address $address
@@ -105,15 +115,17 @@ class AddressesController extends Controller
      */
     public function destroy(Address $address)
     {
-        if ((Auth::user()->address_id === $address->id) || !(Auth::user()->addresses()->where('id', $address->id)->get()))
+        if (Auth::user()->address_id === $address->id)
             return redirect()->route('home')
                 ->with('error', 'Address cannot be removed');
 
+        $user = User::find(Auth::id());
 
-            $address->users()->detach(Auth::id());
-            $address->delete();
+        $user->addresses()->detach($address->id);
 
-            return redirect()->route('home')
-                ->with('success', 'Address removed successfully');
+        $address->delete();
+
+        return redirect()->route('home')
+            ->with('success', 'Address removed successfully');
     }
 }

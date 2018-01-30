@@ -25,3 +25,5 @@ Route::resources([
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/addresses/{address}/remove', 'AddressesController@remove')->name('addresses.remove');

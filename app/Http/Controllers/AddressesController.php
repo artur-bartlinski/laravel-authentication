@@ -45,7 +45,7 @@ class AddressesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(AddressRequest $request)
     {
         $address = Address::create($request->all());
         $address->users()->attach(Auth::id());
@@ -83,7 +83,7 @@ class AddressesController extends Controller
      * @param  \App\Address  $address
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Address $address)
+    public function update(AddressRequest $request, Address $address)
     {
         if (Auth::user()->address_id === $address->id || Auth::user()->addresses()->where('id', $address->id)->get()) {
             $address->update($request->all());

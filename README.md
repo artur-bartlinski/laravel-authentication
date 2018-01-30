@@ -1,5 +1,34 @@
 # Technical Challenge - Code task example
 
+## Setup
+Clone the repository and run from the within the projects base directory
+```bash
+composer install
+```
+
+To run module you need to install database, like MariaDB
+
+Go to https://laravel.com/docs/5.5/installation to configuration section and follow instructions.
+
+Go to https://laravel.com/docs/5.5/database#configuration and follow database configuration instructions
+
+Run migrations and seeds.
+
+```bash
+php artisan migrate
+
+php artisan db:seed
+```
+
+Run server
+```bash
+php artisan serve
+```
+
+Go to http://localhost:8000
+
+
+
 ## Scenario
 You are working in a team of backend developers (So your work will be interacting with modules developed by other developers, 
 and may later on be modified/extended by others) in a project to build a website for our client, You've been assigned the following task.
@@ -12,11 +41,6 @@ We have provided a basic test framework which is described in the setup section.
 ## Contact us
 If you have any questions regarding this test please email ITRM at [william.gu@itrm.co.uk](william.gu@itrm.co.uk) and I will get back to you as soon as possible (core office hours 9-5).
 
-## Setup
-Clone the repository and run from the within the projects base directory
-```bash
-composer install
-```
 
 Run the following to run the tests; you should see phpunit output of 1/1 100% successful test
 ```bash

@@ -2,7 +2,7 @@
     <label for="email" class="col-md-4 control-label">E-Mail Address *</label>
 
     <div class="col-md-6">
-        <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required autofocus>
+        <input id="email" type="email" class="form-control" name="email" value="{{ $user['email'] or old('email') }}" required autofocus>
 
         @if ($errors->has('email'))
             <span class="help-block">
@@ -16,7 +16,7 @@
     <label for="title_id" class="col-md-4 control-label">Title</label>
 
     <div class="col-md-6">
-        <select id="title_id" class="form-control" name="title_id" value="{{ old('title_id') }}">
+        <select id="title_id" class="form-control" name="title_id" value="{{ $user['title_id'] or old('title_id') }}">
             @if($titles)
                 @foreach($titles as $title)
                     <option value="{{ $title->id }}">{{ $title->name }}</option>
@@ -37,7 +37,7 @@
     <label for="forename" class="col-md-4 control-label">Forename</label>
 
     <div class="col-md-6">
-        <input id="forename" type="text" class="form-control" name="forename" value="{{ old('forename') }}">
+        <input id="forename" type="text" class="form-control" name="forename" value="{{ $user['forename'] or old('forename') }}">
 
         @if ($errors->has('forename'))
             <span class="help-block">
@@ -51,7 +51,7 @@
     <label for="surname" class="col-md-4 control-label">Surname</label>
 
     <div class="col-md-6">
-        <input id="surname" type="text" class="form-control" name="surname" value="{{ old('surname') }}">
+        <input id="surname" type="text" class="form-control" name="surname" value="{{ $user['surname'] or old('surname') }}">
 
         @if ($errors->has('surname'))
             <span class="help-block">
@@ -65,7 +65,7 @@
     <label for="dob" class="col-md-4 control-label">Date Of Birth *</label>
 
     <div class="col-md-6">
-        <input id="dob" type="date" class="form-control" name="dob" value="{{ old('dob') }}" required>
+        <input id="dob" type="date" class="form-control" name="dob" value="{{ $user['dob'] or old('dob') }}" required>
 
         @if ($errors->has('dob'))
             <span class="help-block">
@@ -79,7 +79,7 @@
     <label for="gender_id" class="col-md-4 control-label">Gender</label>
 
     <div class="col-md-6">
-        <select id="gender_id" class="form-control" name="gender_id" value="{{ old('gender_id') }}">
+        <select id="gender_id" class="form-control" name="gender_id" value="{{ $user['gender_id'] or old('gender_id') }}">
             @if($genders)
                 @foreach($genders as $gender)
                     <option value="{{ $gender->id }}">{{ $gender->name }}</option>

@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Gender;
 use App\Http\Requests\UserRequest;
+use App\Title;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -69,7 +71,10 @@ class UsersController extends Controller
      */
     public function edit(User $user)
     {
-        return view('users.edit', compact('user'));
+        $titles = Title::all();
+        $genders = Gender::all();
+
+        return view('users.edit', compact('user', 'titles', 'genders'));
     }
 
     /**

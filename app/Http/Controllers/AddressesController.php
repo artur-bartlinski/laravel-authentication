@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Address;
+use App\Http\Requests\AddressRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AddressesController extends Controller
 {
@@ -57,7 +59,7 @@ class AddressesController extends Controller
      */
     public function edit(Address $address)
     {
-        //
+        return view('addresses.edit', compact('address'));
     }
 
     /**
@@ -69,7 +71,14 @@ class AddressesController extends Controller
      */
     public function update(Request $request, Address $address)
     {
-        //
+        if ($address->update($request->all())) {
+
+            return redirect()->route('home')
+                ->with('success', 'Address updated successfully');
+        }
+
+        return redirect()->route('home')
+            ->with('error', 'Address cannot be updated');
     }
 
     /**

@@ -47,4 +47,17 @@ class UserTest extends TestCase
 
         $this->assertEquals('alan_smith@gmail.com', $user['email']);
     }
+
+    /** @test */
+    public function can_update_user_address_details()
+    {
+        $this->put('/addresses/' . $this->user->address_id, [
+            'town' => 'Faversham',
+            '_token' => csrf_token()
+        ]);
+
+        $address = (Address::where('id', $this->user->address_id)->get())[0]->toArray();
+
+        $this->assertEquals('Faversham', $address['town']);
+    }
 }

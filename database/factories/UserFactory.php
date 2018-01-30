@@ -1,5 +1,6 @@
 <?php
 
+use App\Address;
 use App\Gender;
 use App\Title;
 use Faker\Generator as Faker;
@@ -24,6 +25,7 @@ $factory->define(App\User::class, function (Faker $faker) {
         'surname' => $faker->lastName,
         'dob' => '2011-11-11',
         'gender_id' => factory(Gender::class)->create()->id,
+        'address_id' => factory(Address::class)->create()->id,
         'remember_token' => str_random(10),
     ];
 });

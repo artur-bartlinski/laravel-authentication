@@ -21,11 +21,11 @@ class UserTest extends TestCase
     {
         parent::setUp();
 
+        $this->address = factory(Address::class)->make();
         $this->user = factory(User::class)->make([
             'email' => 'john_doe@gmail.com',
         ]);
 
-        $this->address = factory(Address::class)->make();
     }
 
     /** @test */
@@ -54,6 +54,16 @@ class UserTest extends TestCase
         $this->post('/logout');
 
         $this->assertEmpty(Auth::user());
+    }
+
+    /** @test */
+    public function can_return_user_details()
+    {
+        $this->be($this->user);
+
+        $response = $this->get('/home');
+
+        $response->assertSee('john_doe@gmail.com');
     }
 
     public function attemptRegister()

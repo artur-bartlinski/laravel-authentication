@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Address;
 use App\Gender;
 use App\Title;
 use App\User;
@@ -109,17 +110,7 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        $user = User::create([
-            'forename' => $data['forename'],
-            'surname' => $data['surname'],
-            'title_id' => $data['title_id'],
-            'gender_id' => $data['gender_id'],
-            'dob' => $data['dob'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-        ]);
-
-        $user->addresses()->create([
+        $address = Address::create([
             'address_line_1' => $data['address_line_1'],
             'address_line_2' => $data['address_line_2'],
             'town' => $data['town'],
@@ -129,6 +120,20 @@ class RegisterController extends Controller
             'from_date' => $data['from_date'],
             'until_date' => $data['until_date'],
         ]);
+
+//        dd($address->id);
+
+        $user = User::create([
+            'forename' => $data['forename'],
+            'surname' => $data['surname'],
+            'title_id' => $data['title_id'],
+            'gender_id' => $data['gender_id'],
+            'dob' => $data['dob'],
+            'email' => $data['email'],
+            'password' => bcrypt($data['password']),
+            'address_id' => $address->id
+        ]);
+
 
         return $user;
     }

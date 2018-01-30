@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -23,6 +24,20 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $user = Auth::user();
+
+        $title = $user->title;
+        $gender = $user->gender;
+        $address = $user->currentAddress;
+        $addresses = $user->addresses;
+
+        return view('home', array_merge(
+            $user->toArray(), [
+                $title,
+                $gender,
+            ],
+            $address->toArray(),
+            $addresses->toArray()
+        ));
     }
 }

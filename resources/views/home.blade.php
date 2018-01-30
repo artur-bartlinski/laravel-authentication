@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="row">
-        <div class="col-md-8 col-md-offset-2">
+        <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-heading">Dashboard</div>
 
@@ -14,7 +14,16 @@
                         </div>
                     @endif
 
-                    You are logged in!
+                    <a href="{{ route('addresses.create')  }}"><button type="button" class="btn btn-primary btn-lg btn-block">Add previous address</button></a>
+
+                    @include('partials.user_details')
+
+                    @include('partials.address_details')
+
+                        @if($addresses)
+                            @include('partials.previous_addresses')
+                        @endif
+
                 </div>
             </div>
         </div>

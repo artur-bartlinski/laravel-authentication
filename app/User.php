@@ -35,6 +35,11 @@ class User extends Authenticatable
         return $this->belongsTo('App\Gender');
     }
 
+    public function currentAddress()
+    {
+        return $this->hasOne('App\Address', 'id', 'address_id');
+    }
+
     public function addresses()
     {
         return $this->belongsToMany('App\Address');

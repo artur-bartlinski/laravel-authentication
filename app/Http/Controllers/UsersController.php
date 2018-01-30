@@ -79,7 +79,7 @@ class UsersController extends Controller
      * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(UserRequest $request, User $user)
+    public function update(Request $request, User $user)
     {
         if ($user->id === Auth::id()) {
             $user->update($request->all());

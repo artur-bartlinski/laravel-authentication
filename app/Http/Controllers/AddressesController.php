@@ -83,7 +83,7 @@ class AddressesController extends Controller
      * @param  \App\Address  $address
      * @return \Illuminate\Http\Response
      */
-    public function update(AddressRequest $request, Address $address)
+    public function update(Request $request, Address $address)
     {
         if (Auth::user()->address_id === $address->id || Auth::user()->addresses()->where('id', $address->id)->get()) {
             $address->update($request->all());

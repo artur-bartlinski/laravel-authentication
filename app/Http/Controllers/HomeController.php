@@ -32,10 +32,9 @@ class HomeController extends Controller
         $addresses = $user->addresses;
 
         return view('home', array_merge(
-            $user->toArray(), [
-                $title,
-                $gender,
-            ],
+            $user->toArray(),
+            $title->toArray(),
+            $gender->toArray(),
             $address->toArray(),
             $addresses->toArray()
         ));

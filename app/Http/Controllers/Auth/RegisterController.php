@@ -121,8 +121,6 @@ class RegisterController extends Controller
             'until_date' => $data['until_date'],
         ]);
 
-//        dd($address->id);
-
         $user = User::create([
             'forename' => $data['forename'],
             'surname' => $data['surname'],
@@ -133,7 +131,6 @@ class RegisterController extends Controller
             'password' => bcrypt($data['password']),
             'address_id' => $address->id
         ]);
-
 
         return $user;
     }

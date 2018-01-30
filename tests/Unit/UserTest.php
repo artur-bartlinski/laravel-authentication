@@ -15,78 +15,36 @@ class UserTest extends TestCase
     use DatabaseTransactions;
 
     private $user;
-    private $address;
 
     public function setUp()
     {
         parent::setUp();
 
-        $this->address = factory(Address::class)->make();
-        $this->user = factory(User::class)->make([
+        $this->user = factory(User::class)->create([
             'email' => 'john_doe@gmail.com',
         ]);
 
-    }
-
-    /** @test */
-    public function can_register_a_user()
-    {
-        $this->attemptRegister();
-
-        $this->assertDatabaseHas('users', [
-            'email' => 'john_doe@gmail.com'
-        ]);
-    }
-
-    /** @test */
-    public function can_login_registered_user()
-    {
-        $this->attemptLogin();
-
-        $this->assertEquals($this->user->email, Auth::user()->email);
-    }
-
-    /** @test */
-    public function can_logout_user()
-    {
-        $this->attemptLogin();
-
-        $this->post('/logout');
-
-        $this->assertEmpty(Auth::user());
+        $this->be($this->user);
     }
 
     /** @test */
     public function can_return_user_details()
     {
-        $this->be($this->user);
-
         $response = $this->get('/home');
 
         $response->assertSee('john_doe@gmail.com');
     }
 
-    public function attemptRegister()
+    /** @test */
+    public function can_update_user_details()
     {
-        $this->post('/register', array_merge(
-            $this->user->toArray(),
-            [
-                '_token' => csrf_token(),
-                'password' => $this->user->password,
-                'password_confirmation' => $this->user->password
-            ],
-            $this->address->toArray()
-        ));
-    }
-
-    public function attemptLogin()
-    {
-        $this->attemptRegister();
-
-        $this->post('/login', [
-            'email' => 'john_doe@gmail.com',
-            'password' => $this->user->password,
+        $this->put('/users/' . $this->user->id, [
+            'email' => 'alan_smith@gmail.com',
             '_token' => csrf_token()
         ]);
+
+        $user = (User::where('id', $this->user->id)->get())[0]->toArray();
+
+        $this->assertEquals('alan_smith@gmail.com', $user['email']);
     }
 }

@@ -20,9 +20,9 @@
 
                     @include('partials.address_details')
 
-                        @if($addresses)
-                            @include('partials.previous_addresses')
-                        @endif
+                    @if($addresses)
+                        @include('partials.previous_addresses')
+                    @endif
 
                 </div>
             </div>

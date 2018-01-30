@@ -2,11 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UserRequest;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UsersController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -57,7 +69,7 @@ class UsersController extends Controller
      */
     public function edit(User $user)
     {
-        //
+        return view('users.edit', compact('user'));
     }
 
     /**
@@ -69,7 +81,15 @@ class UsersController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        //
+        if ($user->id === Auth::id()) {
+            $user->update($request->all());
+
+            return redirect()->route('home')
+                ->with('success', 'Details updated successfully');
+        }
+
+        return redirect()->route('home')
+            ->with('error', 'Details cannot be updated');
     }
 
     /**
